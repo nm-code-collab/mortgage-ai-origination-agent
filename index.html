@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mortgage AI Origination Agent</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="eyebrow">Portfolio prototype · Human-in-the-loop</p>
+        <h1>Mortgage AI Origination Agent</h1>
+        <p class="subtitle">Organize the file. Surface what needs attention. Never make the lending decision.</p>
+      </div>
+      <div class="safety-badge">No approval or denial decisions</div>
+    </header>
+
+    <main>
+      <section class="card intake-card" aria-labelledby="intake-heading">
+        <div class="section-heading"><div><p class="eyebrow">Step 1</p><h2 id="intake-heading">Borrower-provided information</h2></div><button id="load-demo" class="secondary">Load example</button></div>
+        <p class="helper">Enter only information supplied by the borrower. Leave a field blank when it is unknown.</p>
+        <form id="intake-form">
+          <div class="form-grid">
+            <label>Borrower name<input name="name" autocomplete="name" placeholder="e.g., Jordan Lee" /></label>
+            <label>Monthly gross income (USD)<input name="income" inputmode="decimal" placeholder="e.g., 8500" /></label>
+            <label>Monthly debt payments (USD)<input name="debts" inputmode="decimal" placeholder="e.g., 650" /></label>
+            <label>Estimated monthly housing payment (USD)<input name="housing" inputmode="decimal" placeholder="e.g., 2800" /></label>
+            <label>Liquid assets (USD)<input name="assets" inputmode="decimal" placeholder="e.g., 42000" /></label>
+            <label>Employment status<select name="employment"><option value="">Select status</option><option>Employed</option><option>Self-employed</option><option>Retired</option><option>Other</option></select></label>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="documents-heading">
+        <p class="eyebrow">Step 2</p><h2 id="documents-heading">Source-document values</h2>
+        <p class="helper">For this prototype, enter values read from verified documents. In a production version, an LLM would extract these with citations and a reviewer would confirm them.</p>
+        <div class="form-grid">
+          <label>Documented monthly gross income (USD)<input id="doc-income" inputmode="decimal" placeholder="e.g., 8500" /></label>
+          <label>Documented liquid assets (USD)<input id="doc-assets" inputmode="decimal" placeholder="e.g., 42000" /></label>
+          <label>Document source / notes<input id="doc-note" placeholder="e.g., Pay stub dated Aug. 15" /></label>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="policy-heading">
+        <p class="eyebrow">Step 3</p><h2 id="policy-heading">Provided mortgage policy</h2>
+        <p class="helper">Paste an approved policy excerpt here. The assistant will preserve it as supplied; it does not claim a policy exists when none was provided.</p>
+        <textarea id="policy" rows="5" placeholder="Paste policy text or eligibility guidance…"></textarea>
+      </section>
+
+      <div class="actions"><button id="analyze" class="primary">Review application</button><p>Review results are advisory and require human validation.</p></div>
+
+      <section id="results" class="results hidden" aria-live="polite">
+        <div class="results-heading"><div><p class="eyebrow">Review workspace</p><h2>Application findings</h2></div><div id="review-status" class="status review">Human review required</div></div>
+        <div class="summary-grid">
+          <article class="result-card known"><h3>Known information</h3><ul id="known-list"></ul></article>
+          <article class="result-card missing"><h3>Missing information</h3><ul id="missing-list"></ul></article>
+          <article class="result-card conflict"><h3>Conflicting information</h3><ul id="conflict-list"></ul></article>
+          <article class="result-card assumption"><h3>Assumptions</h3><ul id="assumption-list"></ul></article>
+        </div>
+        <div class="lower-grid">
+          <article class="result-card"><h3>Deterministic calculation</h3><div id="calculation"></div></article>
+          <article class="result-card"><h3>Targeted follow-up questions</h3><ol id="questions-list"></ol></article>
+        </div>
+        <article class="result-card policy-result"><h3>Policy context</h3><p id="policy-result"></p></article>
+        <article class="escalation"><h3>Human review queue</h3><ul id="escalation-list"></ul><p>The assistant has not made an approval, denial, or eligibility decision.</p></article>
+      </section>
+    </main>
+    <footer>Prototype only — do not use real borrower data or rely on this tool for lending decisions.</footer>
+    <script src="app.js"></script>
+  </body>
+</html>
